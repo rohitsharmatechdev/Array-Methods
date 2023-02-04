@@ -45,15 +45,23 @@ Array.prototype._every = function(callback){
 }
 console.log("Every: ", array._every(ele => ele > 0));
 
-Array.prototype._reduce = function(callback, optional){
+Array.prototype._reduce = function(callback, initialValue){
     let length = this.length;
     let counter = 0; 
-    let prev = this[0];
-    for(let i = 1; i < length; i++){
+    let prev = initialValue ?? this[0];
+    let index = initialValue ? 0 : 1;
+    for(let i = index; i < length; i++){
         let current = this[i];
         prev = callback(prev, current, i, this);
     }
     return prev;
 }
-console.log("Reduce: ", array._reduce((acc, ele) => acc - ele), 10);
+console.log("Reduce: ", array._reduce((acc, ele) => acc + ele));
+console.log("Reduce MakeObj: ", [{id:4,n:"A"},{id:2,n:"B"},{id:9,n:"C"}]._reduce((acc, ele) => {
+    acc[ele.id] = ele;
+    return acc;
+}, {}));
+
+// Will discuss later
+//console.log("Sort: ", [3,1,6,2,4]._sort((a, b) => a - b));
 
